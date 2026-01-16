@@ -724,3 +724,163 @@
     padding: 3rem;
     color: #999;
 }
+
+/* HSK and Lesson Styles */
+.hsk-container {
+    padding: 2rem;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.hsk-header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.hsk-header h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.hsk-header p {
+     color: #666;
+}
+
+.hsk-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    padding-bottom: 2rem;
+}
+
+.hsk-card {
+    background: white;
+    border-radius: 24px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.hsk-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    border-color: var(--primary-color);
+}
+
+.hsk-level-badge {
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+}
+
+.hsk-progress-wrapper {
+    margin-bottom: 2rem;
+}
+
+.circle-progress {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circle-text {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.percentage {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.hsk-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background: #f5f5f5;
+    color: #333;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.hsk-card:hover .hsk-btn {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Lesson Detail Page */
+.lesson-page-container {
+    padding: 2rem;
+    height: 100%;
+}
+
+.lesson-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.back-button {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #555;
+}
+
+.back-button:hover {
+    background: #f5f5f5;
+    color: #000;
+}
+
+.empty-lesson-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    background: white;
+    border-radius: 20px;
+    border: 2px dashed #eee;
+    padding: 2rem;
+    text-align: center;
+}
+
+.empty-icon {
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+}
+
+.empty-lesson-state h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.empty-lesson-state p {
+    color: #888;
+    max-width: 400px;
+}
