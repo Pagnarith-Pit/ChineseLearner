@@ -1,0 +1,32 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  --primary-color: #e53935;
+  --primary-light: #ff6f60;
+  --secondary-color: #ffca28;
+  --text-color: #2c3e50;
+  --bg-color: #fdfbf7;
+  --bubble-active: #e53935;
+  --bubble-inactive: #e0e0e0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
