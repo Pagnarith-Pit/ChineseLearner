@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Flame, LayoutDashboard, BookOpen, Trophy, Settings, Bell, Search, User, PiggyBank, GraduationCap } from 'lucide-react'
+import WordBank from './WordBank'
 import './App.css'
 
 function ProfilePage({ username }) {
+  const [currentView, setCurrentView] = useState('dashboard') // 'dashboard' or 'wordbank'
   const [streak, setStreak] = useState(12)
   
   const days = [
@@ -35,9 +37,22 @@ function ProfilePage({ username }) {
         </div>
         
         <ul className="nav-links">
-          <li className="active"><LayoutDashboard size={20} /> <span>Dashboard</span></li>
+          <li 
+            className={currentView === 'dashboard' ? 'active' : ''} 
+            onClick={() => setCurrentView('dashboard')}
+           >
+            <LayoutDashboard size={20} /> <span>Dashboard</span>
+          </li>
+          
           <li><BookOpen size={20} /> <span>Lessons</span></li>
-          <li><PiggyBank size={20} /> <span>Word Bank</span></li>
+          
+          <li 
+            className={currentView === 'wordbank' ? 'active' : ''}
+            onClick={() => setCurrentView('wordbank')}
+           >
+            <PiggyBank size={20} /> <span>Word Bank</span>
+          </li>
+          
           <li><Settings size={20} /> <span>Settings</span></li>
         </ul>
 
@@ -52,19 +67,10 @@ function ProfilePage({ username }) {
 
       {/* Main Content Area */}
       <main className="main-content">
-        {/* Top Header */}
-        {/* <header className="top-header">
-            <div className="search-bar">
-                <Search size={18} className="search-icon" />
-                <input type="text" placeholder="Search for lessons, vocab..." />
-            </div>
-            <div className="header-actions">
-                <button className="icon-btn"><Bell size={20} /></button>
-                <button className="icon-btn"><User size={20} /></button>
-            </div>
-        </header> */}
-
-        <div className="content-scroll">
+        {currentView === 'wordbank' ? (
+           <WordBank />
+        ) : (
+           <div className="content-scroll">
             {/* Welcome Banner */}
             <section className="welcome-banner">
                 <div className="banner-content">
@@ -129,13 +135,13 @@ function ProfilePage({ username }) {
                 </div>
 
                 {/* Card 3: Total Learnt Words */}
-                <div className="card stat-card">
+                <div className="card stat-card" onClick={() => setCurrentView('wordbank')} style={{cursor: 'pointer'}}>
                     <div className="card-header">
                         <h3>Total Learnt</h3>
                         <BookOpen size={16} className="text-muted" />
                     </div>
                     <div className="stat-content">
-                        <span className="stat-value">450</span>
+                        <span className="stat-value">15</span>
                         <span className="stat-label">Words</span>
                     </div>
                 </div>
@@ -152,7 +158,8 @@ function ProfilePage({ username }) {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
+        )}
       </main>
     </div>
   )
