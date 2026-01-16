@@ -828,6 +828,7 @@
 .lesson-page-container {
     padding: 2rem;
     height: 100%;
+    overflow-y: auto;
 }
 
 .lesson-header {
@@ -883,4 +884,67 @@
 .empty-lesson-state p {
     color: #888;
     max-width: 400px;
+}
+
+/* Lesson Cards */
+.lesson-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+}
+
+.lesson-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    border: 1px solid #f0f0f0;
+}
+
+.lesson-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.lesson-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.lesson-number {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    background: rgba(66, 165, 245, 0.1);
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.play-icon {
+    color: #ddd;
+    transition: color 0.2s;
+}
+
+.lesson-card:hover .play-icon {
+    color: var(--primary-color);
+}
+
+.lesson-title {
+    font-size: 1.1rem;
+    margin: 0 0 1rem 0;
+    color: #333;
+    font-weight: 700;
+}
+
+.lesson-meta {
+    display: flex;
+    gap: 0.5rem;
+    color: #888;
+    font-size: 0.85rem;
+    align-items: center;
 }
