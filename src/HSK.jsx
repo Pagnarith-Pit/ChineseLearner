@@ -3,12 +3,12 @@ import './App.css'
 function HSK({ onSelectLevel }) {
   // Dummy data for progress
   const hskLevels = [
-    { level: 1, progress: 85, color: '#42a5f5' },
-    { level: 2, progress: 40, color: '#42a5f5' },
-    { level: 3, progress: 10, color: '#42a5f5' },
-    { level: 4, progress: 0, color: '#bdbdbd' },
-    { level: 5, progress: 0, color: '#bdbdbd' },
-    { level: 6, progress: 0, color: '#bdbdbd' },
+    { level: 1, progress: 100, color: '#42a5f5' },
+    { level: 2, progress: 100, color: '#42a5f5' },
+    { level: 3, progress: 0, color: '#42a5f5' },
+    { level: 4, progress: 0, color: '#42a5f5' },
+    { level: 5, progress: 0, color: '#42a5f5' },
+    { level: 6, progress: 0, color: '#42a5f5' },
   ]
 
   const CircleProgress = ({ percentage, color }) => {

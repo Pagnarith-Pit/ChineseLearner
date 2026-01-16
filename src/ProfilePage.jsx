@@ -113,7 +113,7 @@ function ProfilePage({ username }) {
                         {/* Card 3: Total Learnt Words */}
                         <div className="card stat-card" onClick={() => setCurrentView('wordbank')} style={{cursor: 'pointer'}}>
                             <div className="card-header">
-                                <h3>Total Learnt</h3>
+                                <h3>Total Learnt Words</h3>
                                 <BookOpen size={16} className="text-muted" />
                             </div>
                             <div className="stat-content">
