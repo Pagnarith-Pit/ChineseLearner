@@ -3,7 +3,7 @@ import { Flame, LayoutDashboard, BookOpen, Trophy, Settings, Bell, Search, User,
 import WordBank from './WordBank'
 import HSK from './HSK'
 import LessonPage from './LessonPage'
-import './App.css'
+import './css/App.css'
 
 function ProfilePage({ username }) {
   const [currentView, setCurrentView] = useState('dashboard') // 'dashboard', 'wordbank', 'lessons', 'lesson-detail'

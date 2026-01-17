@@ -1,5 +1,6 @@
 import { ArrowLeft, PlayCircle } from 'lucide-react'
-import './App.css'
+import { useNavigate } from 'react-router-dom'
+import './css/App.css'
 
 // Each of these levels corresponds to HSK levels 1-6
 const lessonsData = {
@@ -17,6 +18,7 @@ const lessonsData = {
 
 function LessonPage({ level, onBack }) {
   const currentLessons = lessonsData[level] || []
+  const navigate = useNavigate()
 
   return (
     <div className="lesson-page-container">
@@ -30,7 +32,12 @@ function LessonPage({ level, onBack }) {
       {currentLessons.length > 0 ? (
         <div className="lesson-grid">
           {currentLessons.map((lesson) => (
-            <div key={lesson.number} className="lesson-card">
+            <div 
+              key={lesson.number} 
+              className="lesson-card"
+              onClick={() => navigate('/MainLearning', { state: { lesson } })}
+              style={{ cursor: 'pointer' }}
+            >
               <div className="lesson-card-header">
                 <span className="lesson-number">Lesson {lesson.number}</span>
                 <PlayCircle className="play-icon" size={24} />

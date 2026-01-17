@@ -1,0 +1,30 @@
+.practice-timer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  transition: all 0.3s ease;
+  position: absolute;
+  top: 2rem;       /* Aligns with padding of container */
+  right: 2rem;     /* Aligns with padding of container */
+  z-index: 10;
+}
+
+.practice-timer.timer-warning {
+  background-color: #ffebee;
+  color: #04a459;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}

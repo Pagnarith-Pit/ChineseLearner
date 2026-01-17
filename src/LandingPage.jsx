@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ArrowRight } from 'lucide-react'
-import './App.css'
+import './css/App.css'
 
 function LandingPage({ onLogin }) {
   const [inputName, setInputName] = useState('')

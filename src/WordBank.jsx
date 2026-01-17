@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Search } from 'lucide-react'
-import './App.css'
+import './css/App.css'
 
 function WordBank() {
   const [searchTerm, setSearchTerm] = useState('')
