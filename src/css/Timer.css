@@ -12,15 +12,22 @@
   color: #333;
   transition: all 0.3s ease;
   position: absolute;
-  top: 2rem;       /* Aligns with padding of container */
+  top: 1rem;       /* Aligns with padding of container */
   right: 2rem;     /* Aligns with padding of container */
   z-index: 10;
 }
 
 .practice-timer.timer-warning {
-  background-color: #ffebee;
-  color: #04a459;
+  background-color: #16fd4c;
+  color: #17aa39; /* Bright Green to indicate that you are nearly finished with the exercise*/
   animation: pulse 2s infinite;
+}
+
+.practice-timer.timer-finished {
+  background-color: #fff8e1;
+  color: #ffb300; /* Gold */
+  border: 1px solid #ffd54f;
+  animation: none;
 }
 
 @keyframes pulse {

@@ -66,7 +66,7 @@ export default function MainLearning() {
     const getInitialTime = () => {
         const path = location.pathname.split('/').pop().toLowerCase();
         switch(path) {
-            case 'listening': return 25; // Pomodoro style
+            case 'listening': return 1; // Pomodoro style
             case 'reading': return 15;
             case 'speaking': return 20;
             case 'vocab': return 10;

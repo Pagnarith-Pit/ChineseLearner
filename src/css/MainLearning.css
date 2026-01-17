@@ -96,8 +96,8 @@
   background: white;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  width: 80%;
-  height: 80%; /* Fills 80% of the screen/container height roughly */
+  width: 90%;
+  height: 90%; /* Fills 90% of the screen/container height roughly */
   display: flex;
   flex-direction: column;
   overflow: hidden;

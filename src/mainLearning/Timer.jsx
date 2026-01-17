@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Timer as TimerIcon } from 'lucide-react';
+import { Timer as TimerIcon, CheckCheck } from 'lucide-react';
 import '../css/Timer.css';
 
 export default function Timer({ initialMinutes = 15, onComplete }) {
@@ -28,12 +28,13 @@ export default function Timer({ initialMinutes = 15, onComplete }) {
     return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
   };
 
+  const isFinished = seconds === 0;
   // Determine color based on time left (e.g., turn green in last minute)
-  const isLowTime = seconds < 60;
+  const isLowTime = seconds > 0 && seconds < 10;
 
   return (
-    <div className={`practice-timer ${isLowTime ? 'timer-warning' : ''}`}>
-      <TimerIcon size={18} />
+    <div className={`practice-timer ${isFinished ? 'timer-finished' : isLowTime ? 'timer-warning' : ''}`}>
+      {isFinished ? <CheckCheck size={18} /> : <TimerIcon size={18} />}
       <span className="timer-display">{formatTime(seconds)}</span>
     </div>
   );
