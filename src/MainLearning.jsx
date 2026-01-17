@@ -27,7 +27,7 @@ const Sidebar = ({ isEnabled }) => {
 
     return (
         <div className="main-learning-sidebar">
-            <Link to="/" className="sidebar-back">
+            <Link to="/profile" className="sidebar-back">
                 <ArrowLeft size={20} />
                 <span>Back to Dashboard</span>
             </Link>
