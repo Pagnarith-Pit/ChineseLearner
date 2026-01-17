@@ -35,7 +35,7 @@ export default function Timer({ initialMinutes = 15, onComplete }) {
   return (
     <div className={`practice-timer ${isFinished ? 'timer-finished' : isLowTime ? 'timer-warning' : ''}`}>
       {isFinished ? <CheckCheck size={18} /> : <TimerIcon size={18} />}
-      <span className="timer-display">{formatTime(seconds)}</span>
+      <span className="timer-display">{isFinished ? 'Completed' : formatTime(seconds)}</span>
     </div>
   );
 }

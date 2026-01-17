@@ -20,8 +20,8 @@ const Sidebar = ({ isEnabled }) => {
     const menuItems = [
         { path: 'listening', label: 'Listening', icon: Headphones },
         { path: 'reading', label: 'Reading', icon: BookOpen },
-        { path: 'speaking', label: 'Speaking', icon: Mic },
         { path: 'vocab', label: 'Vocabulary', icon: Book },
+        { path: 'speaking', label: 'Speaking', icon: Mic },
         { path: 'podcast', label: 'Podcast', icon: Radio },
     ];
 
@@ -89,8 +89,8 @@ export default function MainLearning() {
                     <Route index element={<PodcastMenu onStart={handleStart} />} />
                     <Route path="listening" element={topic ? <ListeningPractice topic={topic} /> : <Navigate to="/MainLearning" replace />} />
                     <Route path="reading" element={topic ? <ReadingPractice topic={topic} /> : <Navigate to="/MainLearning" replace />} />
-                    <Route path="speaking" element={topic ? <SpeakingPractice topic={topic} /> : <Navigate to="/MainLearning" replace />} />
                     <Route path="vocab" element={topic ? <VocabPractice topic={topic} /> : <Navigate to="/MainLearning" replace />} />
+                    <Route path="speaking" element={topic ? <SpeakingPractice topic={topic} /> : <Navigate to="/MainLearning" replace />} />
                     <Route path="podcast" element={topic ? <PodcastDownload topic={topic} /> : <Navigate to="/MainLearning" replace />} />
                 </Routes>
             </div>
