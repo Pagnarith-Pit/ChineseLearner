@@ -27,9 +27,9 @@ const Sidebar = ({ isEnabled }) => {
 
     return (
         <div className="main-learning-sidebar">
-            <Link to="/profile" className="sidebar-back">
+            <Link to="/profile" state={{ view: 'lessons' }} className="sidebar-back">
                 <ArrowLeft size={20} />
-                <span>Back to Dashboard</span>
+                <span>Back to Lessons</span>
             </Link>
             <div className="sidebar-menu">
                 {menuItems.map(item => {

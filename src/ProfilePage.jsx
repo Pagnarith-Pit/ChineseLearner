@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Flame, LayoutDashboard, BookOpen, Trophy, Settings, Bell, Search, User, PiggyBank, GraduationCap } from 'lucide-react'
 import WordBank from './WordBank'
 import HSK from './HSK'
@@ -6,7 +7,8 @@ import LessonPage from './LessonPage'
 import './css/App.css'
 
 function ProfilePage({ username }) {
-  const [currentView, setCurrentView] = useState('dashboard') // 'dashboard', 'wordbank', 'lessons', 'lesson-detail'
+  const location = useLocation()
+  const [currentView, setCurrentView] = useState(location.state?.view || 'dashboard') // 'dashboard', 'wordbank', 'lessons', 'lesson-detail'
   const [selectedHSK, setSelectedHSK] = useState(null)
   const [streak, setStreak] = useState(12)
   
