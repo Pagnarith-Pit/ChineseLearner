@@ -8,7 +8,8 @@ const listeningData = [
         id: 1,
         title: "At the Coffee Shop",
         instruction: "Listen to the customer ordering a drink.",
-        transcript: "你好，我要一杯美式咖啡 (Nǐ hǎo, wǒ yào yī bēi měishì kāfēi).",
+        transcript: "你好，我要一杯美式咖啡.",
+        pinyin: "Nǐ hǎo, wǒ yào yī bēi měishì kāfēi.",
         translation: "Hello, I would like an Americano.",
         audioPlaceholder: <WaveformPlayer audioUrl={sampleAudio} />
     },
@@ -16,7 +17,8 @@ const listeningData = [
         id: 2,
         title: "Asking for Directions",
         instruction: "Listen to someone asking for the subway station.",
-        transcript: "请问，地铁站在哪里？ (Qǐngwèn, dìtiě zhàn zài nǎlǐ?)",
+        transcript: "请问，地铁站在哪里？",
+        pinyin: "Qǐngwèn, dìtiě zhàn zài nǎlǐ?",
         translation: "Excuse me, where is the subway station?",
         audioPlaceholder: "Audio Component Here"
     },
@@ -24,7 +26,8 @@ const listeningData = [
         id: 3,
         title: "Self Introduction",
         instruction: "Listen to a basic introduction.",
-        transcript: "我叫李华，我是学生。 (Wǒ jiào Lǐ Huá, wǒ shì xuéshēng.)",
+        transcript: "我叫李华，我是学生。",
+        pinyin: "Wǒ jiào Lǐ Huá, wǒ shì xuéshēng.",
         translation: "My name is Li Hua, I am a student.",
         audioPlaceholder: "Audio Component Here"
     },
@@ -62,7 +65,7 @@ const PracticeItem = ({ item }) => {
                     value={userInput}
                     onChange={(e) => setUserInput(e.target.value)}
                 />
-                <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'flex-end'}}>
+                <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'flex-start'}}>
                      <button 
                         onClick={() => setSubmitted(true)}
                         disabled={submitted}
@@ -84,11 +87,19 @@ const PracticeItem = ({ item }) => {
             </div>
 
             {submitted && (
-                <div className="transcript-section" style={{ marginTop: '2rem', padding: '1.5rem', backgroundColor: '#f9f9f9', borderRadius: '8px', animation: 'fadeIn 0.5s ease-in' }}>
-                    <h4 style={{ marginTop: 0, color: '#2c3e50' }}>Correct Answer</h4>
-                    <p className="chinese-text" style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: '#333' }}>{item.transcript}</p>
-                    <p className="translation-text" style={{ color: '#666', margin: 0 }}>{item.translation}</p>
-                </div>
+                <>
+                    <div className="transcript-section" style={{ marginTop: '2rem', padding: '1.5rem', backgroundColor: '#f9f9f9', borderRadius: '8px', animation: 'fadeIn 0.5s ease-in' }}>
+                      <div style={{ marginBottom: '2rem' }}>
+                        <p style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#2c3e50', margin: '0 0 0.5rem 0', textTransform: 'uppercase' }}>Your Input</p>
+                        <p style={{ fontSize: '1.5rem', margin: '0 0 0.25rem 0', color: '#333' }}>{userInput || 'No input provided'}</p>
+                        <p style={{ fontSize: '0.9rem', color: '#666', fontStyle: 'italic', margin: 0 }}>(Pin yin displayed here)</p>     
+                      </div>  
+                        <p style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#2c3e50', margin: '0 0 0.5rem 0', textTransform: 'uppercase' }}>CORRECT ANSWER</p>
+                        <p className="chinese-text" style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: '#333' }}>{item.transcript}</p>
+                        <p className="pinyin-text" style={{ fontSize: '1rem', marginBottom: '0.5rem', color: '#555' }}>{item.pinyin}</p>
+                        <p className="translation-text" style={{ color: '#666', margin: 0 }}>{item.translation}</p>
+                    </div>
+                </>
             )}
         </div>
     );

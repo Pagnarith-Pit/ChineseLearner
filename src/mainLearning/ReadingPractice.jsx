@@ -60,7 +60,7 @@ export default function ReadingPractice({ topic }) {
   return (
     <div style={{ height: '100%' }}>
         <FloatingContent 
-            title={`Reading: ${topic || 'General'}`}
+            title={`Reading Pratice`}
             items={readingData}
             renderItem={renderItem}
         />
