@@ -53,7 +53,7 @@ function ProfilePage({ username }) {
                     <section className="welcome-banner">
                         <div className="banner-content">
                             <h1>{username ? `Welcome back, ${username}!` : 'Ni Hao, Scholar!'}</h1>
-                            <p>You're on a roll. Continue your daily lesson to keep your streak alive.</p>
+                            <p>Welcome back to our study plan. Continue your daily lesson to keep your streak alive.</p>
                             <button className="cta-button" onClick={() => setCurrentView('lessons')}>Resume Learning</button>
                         </div>
                         <div className="banner-decoration">

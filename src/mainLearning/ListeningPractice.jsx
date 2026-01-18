@@ -1,5 +1,6 @@
 import React from 'react';
 import FloatingContent from './FloatingContent';
+import sampleAudio from '../assets/sample.mp3';
 
 const listeningData = [
     {
@@ -8,7 +9,7 @@ const listeningData = [
         instruction: "Listen to the customer ordering a drink.",
         transcript: "你好，我要一杯美式咖啡 (Nǐ hǎo, wǒ yào yī bēi měishì kāfēi).",
         translation: "Hello, I would like an Americano.",
-        audioPlaceholder: "Audio Component Here" 
+        audioPlaceholder: <audio controls src={sampleAudio}>Your browser does not support the audio element.</audio>
     },
     {
         id: 2,
@@ -49,7 +50,7 @@ export default function ListeningPractice({ topic }) {
               textAlign: 'center',
               marginBottom: '2rem'
           }}>
-              Play Button / Audio Waveform would go here
+              {item.audioPlaceholder}
           </div>
 
           <div className="transcript-section">
@@ -72,7 +73,7 @@ export default function ListeningPractice({ topic }) {
   return (
     <div style={{ height: '100%' }}>
         <FloatingContent 
-            title={`Listening: ${topic || 'General Practice'}`}
+            title={`Listening Practice`}
             items={listeningData}
             renderItem={renderItem}
         />
