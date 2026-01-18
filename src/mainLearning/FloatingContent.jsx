@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-const FloatingContent = ({ items = [], renderItem, title }) => {
+const FloatingContent = ({ items = [], renderItem, title, cardClassName = "" }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrev = () => {
@@ -33,7 +33,7 @@ const FloatingContent = ({ items = [], renderItem, title }) => {
          <ChevronLeft size={48} />
        </button>
 
-       <div className="floating-card">
+       <div className={`floating-card ${cardClassName}`}>
           {title && (
               <div className="floating-header">
                   <h2 className="floating-title">{title}</h2>
