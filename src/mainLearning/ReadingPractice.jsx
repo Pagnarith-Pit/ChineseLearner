@@ -7,25 +7,26 @@ const readingData = [
       title: "The Little Horse Crosses the River",
       chinese: "小马过河 (Xiǎo mǎ guò hé)",
       content: "小马要过河，老牛说水很浅，松鼠说水很深。小马试了试，原来水既不像老牛说的那样浅，也不像松鼠说的那样深。",
-      question: "Why did the cow say the river was shallow?"
+      question: "Why did the cow say the river was shallow?",
+      answer: "Because it has short legs."
   },
   {
       id: 2,
       title: "Buying Fruit",
       chinese: "买水果 (Mǎi shuǐguǒ)",
       content: "今天我去超市买了一些苹果和香蕉。苹果很红，香蕉很黄。它们都很新鲜。",
-      question: "What did the narrator buy?"
+      question: "What did the narrator buy?",
+      answer: "Apples and bananas."
+
   },
   {
       id: 3,
       title: "My Hobbies",
       chinese: "我的爱好 (Wǒ de àihào)",
       content: "我有很多爱好。我喜欢看书，听音乐，还喜欢踢足球。周末的时候，我经常和朋友去公园踢球。",
-      question: "What does the narrator do on weekends?"
+      question: "What does the narrator do on weekends?",
+      answer: "Plays football with friends in the park."
   },
-   // Add more up to 10...
-   { id:4, title: "Weather", chinese: "天气", content: "今天天气很好。", question: "..." },
-   { id:5, title: "Travel", chinese: "旅游", content: "我想去北京。", question: "..." },
 ];
 
 export default function ReadingPractice({ topic }) {
@@ -34,7 +35,7 @@ export default function ReadingPractice({ topic }) {
           <h3>{item.title} - {item.chinese}</h3>
           
           <div className="reading-content" style={{ 
-              background: '#fff9c4', 
+              background: '#f9f9f9', 
               padding: '2rem', 
               borderRadius: '8px', 
               fontSize: '1.2rem',

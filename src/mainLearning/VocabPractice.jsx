@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import FloatingContent from './FloatingContent';
-import { Volume2 } from 'lucide-react';
+import { Volume2, Book, Tag, MessageCircle, Lightbulb, PenTool } from 'lucide-react';
 import sampleAudio from '../assets/sample.mp3';
 import WaveformPlayer from './WaveformPlayer';
+import StrokeOrderAnimation from './StrokeOrderAnimation';
 
 const vocabData = [
     {
         id: 1,
         character: "你好",
         pinyin: "Nǐ hǎo",
-        definition: "Hello",
+        definition: `Hello`,
         example_sentences: "你好，最近怎么样？ (Hello, how are you lately?)",
         part_of_speech: "noun",
         mnemonic: "Imagine meeting a friend and saying 'Ni hao!' with a big smile.",
@@ -57,21 +58,46 @@ const vocabData = [
     }
 ];
 
-const InfoSection = ({ title, content }) => (
+const InfoSection = ({ icon: Icon, title, content, color }) => (
     <div className="vocab-section" style={{ 
         marginBottom: '0.5rem', 
         padding: '1rem 0', 
         width: '100%',
         maxWidth: '800px',
         display: 'flex',
-        alignItems: 'center',
-        gap: '1rem'
+        alignItems: 'flex-start',
+        gap: '1.5rem'
     }}>
-        <div style={{ flex: 1 }}>
-            <h4 style={{ margin: '0 0 0.5rem 0', color: '#888', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>{title}</h4>
-            <p style={{ margin: 0, color: '#333', fontSize: '1.1rem', lineHeight: '1.5' }}>{content}</p>
+        <div style={{
+            background: color || '#eee',
+            padding: '10px',
+            borderRadius: '12px',
+            color: 'white',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: `0 4px 10px ${color}40`
+        }}>
+            <Icon size={24} />
         </div>
-
+        <div style={{ flex: 1 }}>
+            <h4 style={{ 
+                margin: '0 0 0.4rem 0', 
+                color: color || '#888', 
+                fontSize: '1rem', 
+                textTransform: 'uppercase', 
+                letterSpacing: '1.2px', 
+                fontWeight: '800' 
+            }}>{title}</h4>
+            <div style={{ 
+                margin: 0, 
+                color: '#2d3436', 
+                fontSize: '1rem', 
+                lineHeight: '1.5', 
+                fontWeight: '600',
+                letterSpacing: '-0.01em'
+            }}>{content}</div>
+        </div>
     </div>
 );
 
@@ -95,10 +121,24 @@ const VocabItem = ({ item }) => {
             </div>
 
             <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1rem', paddingBottom: '2rem' }}>
-                <InfoSection title="Definition" content={item.definition} />
-                <InfoSection title="Part of Speech" content={item.part_of_speech} />
-                <InfoSection title="Example Sentences" content={item.example_sentences} />
-                {item.mnemonic && <InfoSection title="Mnemonic" content={item.mnemonic} />}
+                <InfoSection icon={Book} title="Definition" content={item.definition} color="#4a90e2" />
+                <InfoSection icon={Tag} title="Part of Speech (Grammer)" content={item.part_of_speech} color="#ff9f43" />
+                <InfoSection icon={MessageCircle} title="Example Sentences" content={item.example_sentences} color="#2ed573" />
+                {item.mnemonic && <InfoSection icon={Lightbulb} title="Mnemonic" content={item.mnemonic} color="#8207acff" />}
+                
+                <div style={{ width: '100%', marginTop: '1rem' }}>
+                    <InfoSection 
+                        icon={PenTool} 
+                        title="Practice Your Writing" 
+                        content={
+                            <div>
+                                <p style={{ margin: '0 0 1rem 0', fontWeight: 'normal', color: '#666' }}>Watch the animation of the characters. Learn how to write it slowly.</p>
+                                <StrokeOrderAnimation text={item.character} />
+                            </div>
+                        } 
+                        color="#ff6b6b" 
+                    />
+                </div>
             </div>
         </div>
     );
