@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FloatingContent from './FloatingContent';
 import sampleAudio from '../assets/sample.mp3';
+import WaveformPlayer from './WaveformPlayer';
 
 const listeningData = [
     {
@@ -9,7 +10,7 @@ const listeningData = [
         instruction: "Listen to the customer ordering a drink.",
         transcript: "你好，我要一杯美式咖啡 (Nǐ hǎo, wǒ yào yī bēi měishì kāfēi).",
         translation: "Hello, I would like an Americano.",
-        audioPlaceholder: <audio controls src={sampleAudio}>Your browser does not support the audio element.</audio>
+        audioPlaceholder: <WaveformPlayer audioUrl={sampleAudio} />
     },
     {
         id: 2,
@@ -37,41 +38,75 @@ const listeningData = [
     { id: 10, title: "Taxi Ride", instruction: "Giving directions to driver.", transcript: "Wait for audio...", translation: "...", audioPlaceholder: "..." },
 ];
 
+const PracticeItem = ({ item }) => {
+    const [submitted, setSubmitted] = useState(false);
+    const [userInput, setUserInput] = useState("");
+
+    return (
+        <div className="practice-item">
+            <h3>{item.title}</h3>
+            <p className="instruction">{item.instruction}</p>
+            
+            <div className="audio-control-placeholder" style={{ 
+                marginBottom: '2rem'
+            }}>
+                {item.audioPlaceholder}
+            </div>
+
+            <div className="user-input-section" style={{ marginTop: '2rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem' }}>Type what you hear:</label>
+                <textarea 
+                    rows="4" 
+                    style={{ width: '100%', padding: '0.5rem', borderRadius: '8px', border: '1px solid #ccc' }}
+                    placeholder="Enter Pinyin or Characters..."
+                    value={userInput}
+                    onChange={(e) => setUserInput(e.target.value)}
+                />
+                <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'flex-end'}}>
+                     <button 
+                        onClick={() => setSubmitted(true)}
+                        disabled={submitted}
+                        style={{
+                            padding: '0.6rem 1.5rem',
+                            backgroundColor: submitted ? '#ccc' : '#4a90e2',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '6px',
+                            cursor: submitted ? 'default' : 'pointer',
+                            fontSize: '1rem',
+                            fontWeight: '500',
+                            transition: 'background-color 0.2s'
+                        }}
+                    >
+                        {submitted ? 'Submitted' : 'Submit'}
+                    </button>
+                </div>
+            </div>
+
+            {submitted && (
+                <div className="transcript-section" style={{ marginTop: '2rem', padding: '1.5rem', backgroundColor: '#f9f9f9', borderRadius: '8px', animation: 'fadeIn 0.5s ease-in' }}>
+                    <h4 style={{ marginTop: 0, color: '#2c3e50' }}>Correct Answer</h4>
+                    <p className="chinese-text" style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: '#333' }}>{item.transcript}</p>
+                    <p className="translation-text" style={{ color: '#666', margin: 0 }}>{item.translation}</p>
+                </div>
+            )}
+        </div>
+    );
+};
+
 export default function ListeningPractice({ topic }) {
   const renderItem = (item) => (
-      <div className="practice-item">
-          <h3>{item.title}</h3>
-          <p className="instruction">{item.instruction}</p>
-          
-          <div className="audio-control-placeholder" style={{ 
-              background: '#f0f0f0', 
-              padding: '2rem', 
-              borderRadius: '8px', 
-              textAlign: 'center',
-              marginBottom: '2rem'
-          }}>
-              {item.audioPlaceholder}
-          </div>
-
-          <div className="transcript-section">
-              <h4>Transcript (Hidden by default?)</h4>
-              <p className="chinese-text" style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>{item.transcript}</p>
-              <p className="translation-text" style={{ color: '#666' }}>{item.translation}</p>
-          </div>
-          
-          <div className="user-input-section" style={{ marginTop: '2rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem' }}>Type what you hear:</label>
-              <textarea 
-                  rows="4" 
-                  style={{ width: '100%', padding: '0.5rem', borderRadius: '8px', border: '1px solid #ccc' }}
-                  placeholder="Enter Pinyin or Characters..."
-              />
-          </div>
-      </div>
+      <PracticeItem key={item.id} item={item} />
   );
 
   return (
     <div style={{ height: '100%' }}>
+        <style>{`
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `}</style>
         <FloatingContent 
             title={`Listening Practice`}
             items={listeningData}
