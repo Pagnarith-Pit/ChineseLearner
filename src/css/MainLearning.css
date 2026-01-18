@@ -164,3 +164,8 @@
     justify-content: center;
     color: #888;
 }
+
+.vocab-card-wide {
+  width: 98% !important;
+  max-width: none !important; 
+}
