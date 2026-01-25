@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, useLocation, Navigate, useNavigate } from 'react-router-dom';
 import { BookOpen, Headphones, Mic, Book, Radio, ArrowLeft } from 'lucide-react';
 import ListeningPractice from './mainLearning/ListeningPractice';
@@ -8,6 +8,7 @@ import VocabPractice from './mainLearning/VocabPractice';
 import PodcastMenu from './mainLearning/PodcastMenu';
 import Timer from './mainLearning/Timer';
 import PodcastDownload from './mainLearning/PodcastDownload';
+import { MainLearningProvider } from './context/MainLearningContext';
 
 import './css/MainLearning.css';
 
@@ -52,10 +53,27 @@ const Sidebar = ({ isEnabled }) => {
     );
 };
 
+// handle the arguments passed in here, including HSK level and lesson number
 export default function MainLearning() {
     const location = useLocation();
     const navigate = useNavigate();
     const [topic, setTopic] = useState('');
+
+    // Cache lesson context passed from LessonPage so it persists across nested navigations
+    const [lessonContext, setLessonContext] = useState({
+        level: null,
+        lessonNumber: null,
+    });
+
+    useEffect(() => {
+        // Only update if state is actually provided (prevents wiping it on internal route changes)
+        const incomingLevel = location.state?.level;
+        const incomingLessonNumber = location.state?.lessonNumber;
+
+        if (incomingLevel != null && incomingLessonNumber != null) {
+            setLessonContext({ level: incomingLevel, lessonNumber: incomingLessonNumber });
+        }
+    }, [location.state]);
 
     const handleStart = (newTopic) => {
         setTopic(newTopic);
@@ -78,22 +96,70 @@ export default function MainLearning() {
     // Don't show timer on the initial menu page
     const showTimer = location.pathname !== '/MainLearning' && location.pathname !== '/MainLearning/';
 
+    const { level, lessonNumber } = lessonContext;
+
     return (
-        <div className="main-learning-layout">
-            <Sidebar isEnabled={!!topic} />
-            <div className="main-learning-content">
-                {/* Timer component with key to force reset on route change */}
-                {showTimer && <Timer key={location.pathname} initialMinutes={getInitialTime()} />}
-                
-                <Routes>
-                    <Route index element={<PodcastMenu onStart={handleStart} />} />
-                    <Route path="listening" element={topic ? <ListeningPractice topic={topic} /> : <Navigate to="/MainLearning" replace />} />
-                    <Route path="reading" element={topic ? <ReadingPractice topic={topic} /> : <Navigate to="/MainLearning" replace />} />
-                    <Route path="vocab" element={topic ? <VocabPractice topic={topic} /> : <Navigate to="/MainLearning" replace />} />
-                    <Route path="speaking" element={topic ? <SpeakingPractice topic={topic} /> : <Navigate to="/MainLearning" replace />} />
-                    <Route path="podcast" element={topic ? <PodcastDownload topic={topic} /> : <Navigate to="/MainLearning" replace />} />
-                </Routes>
+        <MainLearningProvider level={level} lessonNumber={lessonNumber}>
+            <div className="main-learning-layout">
+                <Sidebar isEnabled={!!topic} />
+                <div className="main-learning-content">
+                    {showTimer && <Timer key={location.pathname} initialMinutes={getInitialTime()} />}
+
+                    <Routes>
+                        <Route
+                            index
+                            element={
+                                <PodcastMenu
+                                    onStart={handleStart}
+                                    level={level}
+                                    lessonNumber={lessonNumber}
+                                />
+                            }
+                        />
+
+                        <Route
+                            path="listening"
+                            element={
+                                topic
+                                    ? <ListeningPractice level={level} lessonNumber={lessonNumber} />
+                                    : <Navigate to="/MainLearning" replace />
+                            }
+                        />
+                        <Route
+                            path="reading"
+                            element={
+                                topic
+                                    ? <ReadingPractice level={level} lessonNumber={lessonNumber} />
+                                    : <Navigate to="/MainLearning" replace />
+                            }
+                        />
+                        <Route
+                            path="vocab"
+                            element={
+                                topic
+                                    ? <VocabPractice level={level} lessonNumber={lessonNumber} />
+                                    : <Navigate to="/MainLearning" replace />
+                            }
+                        />
+                        <Route
+                            path="speaking"
+                            element={
+                                topic
+                                    ? <SpeakingPractice level={level} lessonNumber={lessonNumber} />
+                                    : <Navigate to="/MainLearning" replace />
+                            }
+                        />
+                        <Route
+                            path="podcast"
+                            element={
+                                topic
+                                    ? <PodcastDownload topic={topic} level={level} lessonNumber={lessonNumber} />
+                                    : <Navigate to="/MainLearning" replace />
+                            }
+                        />
+                    </Routes>
+                </div>
             </div>
-        </div>
+        </MainLearningProvider>
     );
 }

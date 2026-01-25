@@ -1,9 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
 import FloatingContent from './FloatingContent';
 import { Volume2, Book, Tag, MessageCircle, Lightbulb, PenTool } from 'lucide-react';
 import sampleAudio from '../assets/sample.mp3';
 import WaveformPlayer from './WaveformPlayer';
 import StrokeOrderAnimation from './StrokeOrderAnimation';
+import { useMainLearning } from '../context/MainLearningContext';
+
+
+// Keep the DB call in a separate function (but in this file, per request)
+async function fetchVocab({ level, lessonNumber } = {}) {
+  let query = supabase
+    .from('Vocabulary')
+    .select(
+      'id, character, pinyin, definition, example_sentences, part_of_speech, mnemonic, audio_url, level, lesson_number'
+    )
+    .order('id', { ascending: true });
+
+  if (level != null) query = query.eq('level', level);
+  if (lessonNumber != null) query = query.eq('lesson_number', lessonNumber);
+
+  const { data, error } = await query;
+  if (error) throw error;
+
+  return (data || []).map((row) => ({
+    id: row.id,
+    character: row.character,
+    pinyin: row.pinyin,
+    definition: row.definition,
+    example_sentences: row.example_sentences,
+    part_of_speech: row.part_of_speech,
+    mnemonic: row.mnemonic,
+    audio: row.audio_url || null,
+  }));
+}
 
 const vocabData = [
     {
@@ -144,12 +173,47 @@ const VocabItem = ({ item }) => {
     );
 };
 
-export default function VocabPractice() {
+export default function VocabPractice({ level, lessonNumber }) {
+    const { vocabItems, vocabLoading, vocabError } = useMainLearning();
+    const itemsToRender = vocabItems && vocabItems.length > 0 ? vocabItems : vocabData;
+
+//   if (vocabLoading) return <div style={{ padding: '1rem' }}>Loading vocabulary…</div>;
+//   if (vocabError) return <div style={{ padding: '1rem', color: '#c0392b' }}>{vocabError}</div>;
+
+//   const [items, setItems] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [errorText, setErrorText] = useState('');
+
+//   useEffect(() => {
+//     let cancelled = false;
+
+//     async function load() {
+//       setLoading(true);
+//       setErrorText('');
+//       try {
+//         const data = await fetchVocab({ level, lessonNumber });
+//         if (!cancelled) setItems(data);
+//       } catch (e) {
+//         if (!cancelled) setErrorText(e?.message || 'Failed to load vocabulary.');
+//       } finally {
+//         if (!cancelled) setLoading(false);
+//       }
+//     }
+
+//     load();
+//     return () => {
+//       cancelled = true;
+//     };
+//   }, [level, lessonNumber]);
+
+//   if (loading) return <div style={{ padding: '1rem' }}>Loading vocabulary…</div>;
+//   if (errorText) return <div style={{ padding: '1rem', color: '#c0392b' }}>{errorText}</div>;
+
     return (
         <div style={{ height: '100%' }}>
             <FloatingContent 
                 title="Vocabulary Practice"
-                items={vocabData}
+                items={itemsToRender}
                 renderItem={(item) => <VocabItem key={item.id} item={item} />}
                 cardClassName="vocab-card-wide"
             />
