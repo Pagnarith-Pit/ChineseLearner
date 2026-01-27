@@ -7,7 +7,7 @@ const listeningData = [
     {
         id: 1,
         title: "At the Coffee Shop",
-        instruction: "Listen to the customer ordering a drink.",
+        summary: "Listen to the customer ordering a drink.",
         transcript: "你好，我要一杯美式咖啡.",
         pinyin: "Nǐ hǎo, wǒ yào yī bēi měishì kāfēi.",
         translation: "Hello, I would like an Americano.",
@@ -16,7 +16,7 @@ const listeningData = [
     {
         id: 2,
         title: "Asking for Directions",
-        instruction: "Listen to someone asking for the subway station.",
+        summary: "Listen to someone asking for the subway station.",
         transcript: "请问，地铁站在哪里？",
         pinyin: "Qǐngwèn, dìtiě zhàn zài nǎlǐ?",
         translation: "Excuse me, where is the subway station?",
@@ -25,20 +25,20 @@ const listeningData = [
     {
         id: 3,
         title: "Self Introduction",
-        instruction: "Listen to a basic introduction.",
+        summary: "Listen to a basic introduction.",
         transcript: "我叫李华，我是学生。",
         pinyin: "Wǒ jiào Lǐ Huá, wǒ shì xuéshēng.",
         translation: "My name is Li Hua, I am a student.",
         audioPlaceholder: "Audio Component Here"
     },
     // Add more items as needed (up to 10)
-    { id: 4, title: "Booking a Ticket", instruction: "Booking a train ticket.", transcript: "Wait for audio...", translation: "...", audioPlaceholder: "..." },
-    { id: 5, title: "Phone Call", instruction: "Calling a friend.", transcript: "Wait for audio...", translation: "...", audioPlaceholder: "..." },
-    { id: 6, title: "At the Restaurant", instruction: "Ordering food.", transcript: "Wait for audio...", translation: "...", audioPlaceholder: "..." },
-    { id: 7, title: "Shopping", instruction: "Bargaining for a price.", transcript: "Wait for audio...", translation: "...", audioPlaceholder: "..." },
-    { id: 8, title: "Weather Forecast", instruction: "Listening to the weather.", transcript: "Wait for audio...", translation: "...", audioPlaceholder: "..." },
-    { id: 9, title: "Doctor Appointment", instruction: "Describing symptoms.", transcript: "Wait for audio...", translation: "...", audioPlaceholder: "..." },
-    { id: 10, title: "Taxi Ride", instruction: "Giving directions to driver.", transcript: "Wait for audio...", translation: "...", audioPlaceholder: "..." },
+    { id: 4, title: "Booking a Ticket", summary: "Booking a train ticket.", transcript: "Wait for audio...", translation: "...", audioPlaceholder: "..." },
+    { id: 5, title: "Phone Call", summary: "Calling a friend.", transcript: "Wait for audio...", translation: "...", audioPlaceholder: "..." },
+    { id: 6, title: "At the Restaurant", summary: "Ordering food.", transcript: "Wait for audio...", translation: "...", audioPlaceholder: "..." },
+    { id: 7, title: "Shopping", summary: "Bargaining for a price.", transcript: "Wait for audio...", translation: "...", audioPlaceholder: "..." },
+    { id: 8, title: "Weather Forecast", summary: "Listening to the weather.", transcript: "Wait for audio...", translation: "...", audioPlaceholder: "..." },
+    { id: 9, title: "Doctor Appointment", summary: "Describing symptoms.", transcript: "Wait for audio...", translation: "...", audioPlaceholder: "..." },
+    { id: 10, title: "Taxi Ride", summary: "Giving directions to driver.", transcript: "Wait for audio...", translation: "...", audioPlaceholder: "..." },
 ];
 
 const PracticeItem = ({ item }) => {
@@ -48,7 +48,7 @@ const PracticeItem = ({ item }) => {
     return (
         <div className="practice-item">
             <h3>{item.title}</h3>
-            <p className="instruction">{item.instruction}</p>
+            <p className="summary">{item.summary}</p>
             
             <div className="audio-control-placeholder" style={{ 
                 marginBottom: '2rem'
