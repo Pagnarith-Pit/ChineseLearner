@@ -1,28 +1,48 @@
-import { useState, useEffect } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Flame, LayoutDashboard, BookOpen, Trophy, Settings, Bell, Search, User, PiggyBank, GraduationCap } from 'lucide-react'
 import WordBank from './WordBank'
 import HSK from './HSK'
 import LessonPage from './LessonPage'
 import './css/App.css'
+import { useSupabase } from './context/SupabaseProvider'
 
 function ProfilePage({ username }) {
+    const { user } = useSupabase()
   const location = useLocation()
   const [currentView, setCurrentView] = useState(location.state?.view || 'dashboard') // 'dashboard', 'wordbank', 'lessons', 'lesson-detail'
   const [selectedHSK, setSelectedHSK] = useState(null)
-  const [streak, setStreak] = useState(12)
+    const [streak, setStreak] = useState(12)
   
-  const days = [
-    { name: 'Mon', active: true },
-    { name: 'Tue', active: true },
-    { name: 'Wed', active: true },
-    { name: 'Thu', active: true }, 
-    { name: 'Fri', active: false },
-    { name: 'Sat', active: false },
-    { name: 'Sun', active: false },
-  ]
+    const lastSignInAt = user?.last_sign_in_at ? new Date(user.last_sign_in_at) : null
+    const now = useMemo(() => new Date(), [])
+    const streakAlive = lastSignInAt
+        ? now.getTime() - lastSignInAt.getTime() <= 24 * 60 * 60 * 1000
+        : false
+
+    useEffect(() => {
+        setStreak(streakAlive ? 1 : 0)
+    }, [streakAlive])
+
+    const days = useMemo(() => {
+        const startOfWeek = new Date(now)
+        const dayIndex = startOfWeek.getDay()
+        const mondayOffset = (dayIndex + 6) % 7
+        startOfWeek.setDate(startOfWeek.getDate() - mondayOffset)
+
+        const shortNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        return shortNames.map((name, index) => {
+            const dayDate = new Date(startOfWeek)
+            dayDate.setDate(startOfWeek.getDate() + index)
+            const isToday = dayDate.toDateString() === now.toDateString()
+            return {
+                name,
+                active: streakAlive && isToday,
+            }
+        })
+    }, [now, streakAlive])
   
-  const activeDayIndex = days.filter(d => d.active).length - 1;
+    const activeDayIndex = days.findIndex(d => d.active) === -1 ? 0 : days.findIndex(d => d.active)
 
   const [flameScale, setFlameScale] = useState(1);
   useEffect(() => {
@@ -108,7 +128,7 @@ function ProfilePage({ username }) {
                                 </div>
                             </div>
                             <div className="week-summary">
-                                <p>You've completed <strong>4 out of 7</strong> daily goals this week.</p>
+                                <p>Login <strong>everyday</strong> to maintain the streak and keep progressing!</p>
                             </div>
                         </div>
         

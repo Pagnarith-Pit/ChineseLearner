@@ -1,17 +1,77 @@
+import { useEffect, useMemo, useState } from 'react'
 import './css/App.css'
+import { useSupabase } from './context/SupabaseProvider'
 
+const COLOR = '#42a5f5'
+const LEVELS = [1, 2, 3, 4, 5, 6]
+// Table name HSK_Progress with columns: level (int), progress (int), userID (uuid)
 function HSK({ onSelectLevel }) {
-  // Dummy data for progress
-  const hskLevels = [
-    { level: 1, progress: 100, color: '#42a5f5' },
-    { level: 2, progress: 100, color: '#42a5f5' },
-    { level: 3, progress: 0, color: '#42a5f5' },
-    { level: 4, progress: 0, color: '#42a5f5' },
-    { level: 5, progress: 0, color: '#42a5f5' },
-    { level: 6, progress: 0, color: '#42a5f5' },
-  ]
+  const { supabase, user } = useSupabase()
+  const baseLevels = useMemo(
+    () => LEVELS.map((level) => ({ level, progress: 0 })),
+    []
+  )
+  const [hskLevels, setHskLevels] = useState(baseLevels)
+  const [debugRows, setDebugRows] = useState([])
+  const [debugError, setDebugError] = useState('')
 
-  const CircleProgress = ({ percentage, color }) => {
+  useEffect(() => {
+    let isMounted = true
+
+    const clampProgress = (value) => {
+      if (Number.isNaN(value)) return 0
+      return Math.min(100, Math.max(0, Math.round(value)))
+    }
+
+    const loadProgress = async () => {
+      if (!user?.id) {
+        setHskLevels(baseLevels)
+        setDebugRows([])
+        setDebugError('')
+        return
+      }
+
+      const { data, error } = await supabase
+        .from('HSK_Progress')
+        .select('level, progress, userID')
+        .eq('userID', user.id)
+
+      if (!isMounted) return
+      if (error) {
+        console.error('Failed to load HSK progress', error)
+        setHskLevels(baseLevels)
+        setDebugRows([])
+        setDebugError(error.message || 'Unknown error')
+        return
+      }
+
+      setDebugRows(data || [])
+      setDebugError('')
+
+      const progressByLevel = new Map()
+      ;(data || []).forEach((row) => {
+        const levelNumber = Number(row.level)
+        if (!Number.isNaN(levelNumber)) {
+          progressByLevel.set(levelNumber, clampProgress(Number(row.progress ?? 0)))
+        }
+      })
+
+      setHskLevels(
+        LEVELS.map((level) => ({
+          level,
+          progress: progressByLevel.get(level) ?? 0,
+        }))
+      )
+    }
+
+    loadProgress()
+
+    return () => {
+      isMounted = false
+    }
+  }, [supabase, user, baseLevels])
+
+  const CircleProgress = ({ percentage }) => {
     const radius = 35;
     const circumference = 2 * Math.PI * radius;
     const strokeDashoffset = circumference - (percentage / 100) * circumference;
@@ -31,7 +91,7 @@ function HSK({ onSelectLevel }) {
             cx="50"
             cy="50"
             r={radius}
-            stroke={percentage > 0 ? color : 'transparent'}
+            stroke={percentage > 0 ? COLOR : 'transparent'}
             strokeWidth="8"
             fill="transparent"
             strokeDasharray={circumference}
@@ -65,7 +125,7 @@ function HSK({ onSelectLevel }) {
             <div className="hsk-level-badge">HSK {item.level}</div>
             
             <div className="hsk-progress-wrapper">
-                <CircleProgress percentage={item.progress} color={item.color} />
+              <CircleProgress percentage={item.progress} />
             </div>
 
             <button className="hsk-btn">
