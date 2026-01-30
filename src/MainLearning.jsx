@@ -84,12 +84,12 @@ export default function MainLearning() {
     const getInitialTime = () => {
         const path = location.pathname.split('/').pop().toLowerCase();
         switch(path) {
-            case 'listening': return 1; // Pomodoro style
-            case 'reading': return 15;
+            case 'listening': return 5; // Pomodoro style
+            case 'reading': return 5;
             case 'speaking': return 20;
-            case 'vocab': return 10;
-            case 'podcast': return 45;
-            default: return 30;
+            case 'vocab': return 30;
+            case 'podcast': return 10;
+            default: return 10;
         }
     };
 
